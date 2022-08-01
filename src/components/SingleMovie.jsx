@@ -1,100 +1,110 @@
-import { useState } from 'react'
-import { Col, Button } from 'react-bootstrap'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+/** @format */
+
+import { useEffect } from "react"
+import { useState } from "react"
+import { Col, Button } from "react-bootstrap"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 //import CommentsList from './CommentsList'
 
 const SingleMovie = ({ data, imdb }) => {
-    const [selected, setSelected] = useState(false)
-    const navigate = useNavigate()
-    // state = {
-    //     selected: false,
-    //     comments: [],
-    //     error: false,
-    //     // newComment: {
-    //     //     comment: '',
-    //     //     rate: '3',
-    //     //     elementId: this.props.data.imdbID,
-    //     // },
-    // }
+  const [selected, setSelected] = useState(false)
+  const navigate = useNavigate()
+  // state = {
+  //     selected: false,
+  //     comments: [],
+  //     error: false,
+  //     // newComment: {
+  //     //     comment: '',
+  //     //     rate: '3',
+  //     //     elementId: this.props.data.imdbID,
+  //     // },
+  // }
 
-    // fetchComments = async (movieID) => {
-    //     const COMMENTS_URL = 'https://striveschool-api.herokuapp.com/api/comments/'
-    //     try {
-    //         const response = await fetch(COMMENTS_URL + movieID, {
-    //             headers: {
-    //                 Authorization:
-    //                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjAyOTIxNzAwOTM4MjAwMTVkNjlkNGQiLCJpYXQiOjE2NTQwMDIzNTksImV4cCI6MTY1NTIxMTk1OX0.Az-VKL4DCsHqOMRsgI6JMGX4WTRG5BR3DAMEsMZdj6E',
-    //             },
-    //         })
-    //         if (response.ok) {
-    //             const comments = await response.json()
-    //             this.setState({ error: false, comments })
-    //         } else {
-    //             console.log('an error occurred')
-    //             this.setState({ error: true })
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //         this.setState({ error: true })
-    //     }
-    // }
+  // fetchComments = async (movieID) => {
+  //     const COMMENTS_URL = 'https://striveschool-api.herokuapp.com/api/comments/'
+  //     try {
+  //         const response = await fetch(COMMENTS_URL + movieID, {
+  //             headers: {
+  //                 Authorization:
+  //                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjAyOTIxNzAwOTM4MjAwMTVkNjlkNGQiLCJpYXQiOjE2NTQwMDIzNTksImV4cCI6MTY1NTIxMTk1OX0.Az-VKL4DCsHqOMRsgI6JMGX4WTRG5BR3DAMEsMZdj6E',
+  //             },
+  //         })
+  //         if (response.ok) {
+  //             const comments = await response.json()
+  //             this.setState({ error: false, comments })
+  //         } else {
+  //             console.log('an error occurred')
+  //             this.setState({ error: true })
+  //         }
+  //     } catch (error) {
+  //         console.log(error)
+  //         this.setState({ error: true })
+  //     }
+  // }
 
-    // submitComment = async (e) => {
-    //     e.preventDefault()
-    //     const COMMENTS_URL = 'https://striveschool-api.herokuapp.com/api/comments/'
-    //     try {
-    //         const response = await fetch(COMMENTS_URL, {
-    //             method: 'POST',
-    //             body: JSON.stringify(this.state.newComment),
-    //             headers: {
-    //                 Authorization:
-    //                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjAyOTIxNzAwOTM4MjAwMTVkNjlkNGQiLCJpYXQiOjE2NTQwMDIzNTksImV4cCI6MTY1NTIxMTk1OX0.Az-VKL4DCsHqOMRsgI6JMGX4WTRG5BR3DAMEsMZdj6E',
-    //                 'Content-Type': 'application/json',
-    //             },
-    //         })
-    //         if (response.ok) {
-    //             alert('Comment added')
-    //             this.setState({
-    //                 newComment: {
-    //                     comment: '',
-    //                     rate: 0,
-    //                     elementId: this.props.data.imdbID,
-    //                 },
-    //             })
-    //         } else {
-    //             alert('An error has occurred')
-    //         }
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+  // submitComment = async (e) => {
+  //     e.preventDefault()
+  //     const COMMENTS_URL = 'https://striveschool-api.herokuapp.com/api/comments/'
+  //     try {
+  //         const response = await fetch(COMMENTS_URL, {
+  //             method: 'POST',
+  //             body: JSON.stringify(this.state.newComment),
+  //             headers: {
+  //                 Authorization:
+  //                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjAyOTIxNzAwOTM4MjAwMTVkNjlkNGQiLCJpYXQiOjE2NTQwMDIzNTksImV4cCI6MTY1NTIxMTk1OX0.Az-VKL4DCsHqOMRsgI6JMGX4WTRG5BR3DAMEsMZdj6E',
+  //                 'Content-Type': 'application/json',
+  //             },
+  //         })
+  //         if (response.ok) {
+  //             alert('Comment added')
+  //             this.setState({
+  //                 newComment: {
+  //                     comment: '',
+  //                     rate: 0,
+  //                     elementId: this.props.data.imdbID,
+  //                 },
+  //             })
+  //         } else {
+  //             alert('An error has occurred')
+  //         }
+  //     } catch (error) {
+  //         console.log(error)
+  //     }
+  // }
 
-    // handleRadioChange = (rating) => {
-    //     let newComment = this.state.newComment
-    //     newComment.rate = rating
-    //     this.setState({ newComment })
-    // }
+  // handleRadioChange = (rating) => {
+  //     let newComment = this.state.newComment
+  //     newComment.rate = rating
+  //     this.setState({ newComment })
+  // }
 
-    // handleCommentText = (e) => {
-    //     let newComment = this.state.newComment
-    //     newComment.comment = e.currentTarget.value
-    //     this.setState({ newComment })
-    // }
+  // handleCommentText = (e) => {
+  //     let newComment = this.state.newComment
+  //     newComment.comment = e.currentTarget.value
+  //     this.setState({ newComment })
+  // }
+  console.log(data)
+  useEffect(() => {
+    console.log(data)
+  })
 
-
-    return (
-        <Col className="mb-2" key={imdb}>
-            <img
-                className="img-fluid"
-                src={data.Poster}
-                alt="movie"
-                onClick={() => {
-                    setSelected({ selected: !selected })
-                    // this.fetchComments(this.props.data.imdbID)
-                }}
-            />
-            <Button className='mt-2' onClick={() => navigate('/MovieDetails/' + imdb)}>MORE DETAILS</Button>
-            {/* <Modal
+  return (
+    <Col className='mb-2' key={imdb}>
+      <img
+        className='img-fluid'
+        src={data.Poster}
+        alt='movie'
+        onClick={() => {
+          setSelected({ selected: !selected })
+          // this.fetchComments(this.props.data.imdbID)
+        }}
+      />
+      <Button
+        className='mt-2'
+        onClick={() => navigate("/MovieDetails/" + imdb)}>
+        MORE DETAILS
+      </Button>
+      {/* <Modal
                     show={this.state.selected}
                     onHide={() => this.setState({ selected: !this.state.selected })}
                 >
@@ -180,9 +190,8 @@ const SingleMovie = ({ data, imdb }) => {
                         </div>
                     </Modal.Body>
                 </Modal> */}
-        </Col>
-    )
-
+    </Col>
+  )
 }
 
 export default SingleMovie

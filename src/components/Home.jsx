@@ -1,14 +1,11 @@
 /** @format */
-
-import { Component } from "react"
+import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import { Container, Alert, Dropdown } from "react-bootstrap"
 import MyNavbar from "../components/MyNavbar"
 import MyFooter from "../components/MyFooter"
 import MovieList from "../components/MovieList"
-import { useState } from "react"
-import { useEffect } from "react"
 
 const Home = () => {
   // state = {
@@ -19,7 +16,7 @@ const Home = () => {
   //   loading: true,
   //   error: false,
   // }
-  const [gallary, setGallary] = useState([])
+  const [gallery, setGallery] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -31,67 +28,56 @@ const Home = () => {
   //   console.log(gallary)
   // }
 
-  const fetchMovies = () => {
-    // Promise.all([
-    //   fetch(OMDB_URL + "/medias")
-    //     .then((response) => response.json())
-    //     .then((responseObject) => {
-    //       if (responseObject.Response === "True") {
-    //         //setState({ gallery1: responseObject.Response })
-    //         setGallary(responseObject.Response)
-    //       } else {
-    //         //setState({ error: true })
-    //         setError(true)
-    //       }
-    //     }),
-
-    // ])
-    //   //.then(() => setState({ loading: false }))
-    //   .then(() => setLoading(false))
-    //   .catch((err) => {
-    //     setError(true)
-    //     console.log("An error has occurred:", err)
-    //   })
-    let response = fetch(OMDB_URL + "/medias")
-    let data = response.json()
-  }
-
-  const showSearchResult = async (searchString) => {
-    if (searchString === "") {
-      //  setState({ error: false, searchResults: [] }, () => {
-      //    fetchMovies()
-      //  })
-      setError(false)
-      setSearchResults([])
-      fetchMovies()
-    } else {
-      try {
-        const response = await fetch(this.OMDB_URL + "&s=" + searchString)
-        if (response.ok) {
-          const data = await response.json()
-          if (data.Response === "True") {
-            //setState({ searchResults: data.Search, error: false })
-            setSearchResults(data.Search)
-            setError(false)
-          } else {
-            //setState({ error: true })
-            setError(true)
-          }
-        } else {
-          //setState({ error: true })
-          setError(true)
-          console.log("an error occurred")
-        }
-      } catch (error) {
-        //setState({ error: true })
-        setError(true)
-        console.log(error)
-      }
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch(OMDB_URL + "/medias")
+      const data = await response.json()
+      console.log(data)
+      return data
+    } catch (error) {
+      console.log(error)
     }
   }
+
+  // const showSearchResult = async (searchString) => {
+  //   if (searchString === "") {
+  //     //  setState({ error: false, searchResults: [] }, () => {
+  //     //    fetchMovies()
+  //     //  })
+  //     setError(false)
+  //     setSearchResults([])
+  //     fetchMovies()
+  //   } else {
+  //     try {
+  //       const response = await fetch(OMDB_URL + "&s=" + searchString)
+  //       if (response.ok) {
+  //         const data = await response.json()
+  //         if (data.Response === "True") {
+  //           //setState({ searchResults: data.Search, error: false })
+  //           setSearchResults(data.Search)
+  //           setError(false)
+  //         } else {
+  //           //setState({ error: true })
+  //           setError(true)
+  //         }
+  //       } else {
+  //         //setState({ error: true })
+  //         setError(true)
+  //         console.log("an error occurred")
+  //       }
+  //     } catch (error) {
+  //       //setState({ error: true })
+  //       setError(true)
+  //       console.log(error)
+  //     }
+  //   }
+  // }
   useEffect(() => {
-    fetchMovies()
-    console.log(gallary)
+    fetchMovies().then((movie) => {
+      //setGallery(movie)
+    })
+    //console.log(gallery)
+    //setGallery(fetchMovies)
   })
 
   return (
@@ -121,23 +107,21 @@ const Home = () => {
             <i className='fa fa-th icons'></i>
           </div>
         </div>
-        {/* {this.state.error && (
-            <Alert variant='danger' className='text-center'>
-              An error has occurred, please try again!
-            </Alert>
-          )}
-          {this.state.searchResults?.length > 0 && (
-            <MovieList
-              title='Search results'
-              movies={this.state.searchResults}
-            />
-          )} */}
-        {!error && !searchResults?.length > 0 && (
+        {/* {error && (
+          <Alert variant='danger' className='text-center'>
+            An error has occurred, please try again!
+          </Alert>
+        )}
+        {searchResults?.length > 0 && (
+          <MovieList title='Search results' movies={searchResults} />
+        )} */}
+        {/* {!error && !searchResults?.length > 0 && ( */}
+        {gallery && (
           <>
             <MovieList
               title='Harry Potter'
               loading={loading}
-              movies={gallary.slice(0, 6)}
+              movies={gallery.slice(0, 6)}
             />
             {/* <MovieList
                 title='The Avengers'
